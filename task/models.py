@@ -26,8 +26,8 @@ class Task(models.Model):
     dueTo = models.DateTimeField()
     created = models.DateTimeField()
     updated = models.DateTimeField()
-    priority = models.CharField(choices=Priority.choices)
-    category = models.CharField(choices=Category.choices)
-    status = models.CharField(choices=TaskStatus.choices)
+    priority = models.TextField(choices=Priority.choices)
+    category = models.TextField(choices=Category.choices)
+    status = models.TextField(choices=TaskStatus.choices)
     contacts = models.ManyToManyField(Contact, related_name='tasks')
 
