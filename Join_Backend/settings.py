@@ -25,7 +25,10 @@ SECRET_KEY = 'django-insecure-ai+qbxx-91s!buerhoqf_-xrcvoly!n=+bgf9hfjps-+!4%_jh
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1'
+]
 
 
 # Application definition
@@ -42,6 +45,7 @@ INSTALLED_APPS = [
     'task',
     'subtask',
     'contact',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [

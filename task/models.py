@@ -29,7 +29,7 @@ class Task(models.Model):
     priority = models.TextField(choices=Priority.choices)
     category = models.TextField(choices=Category.choices)
     status = models.TextField(choices=TaskStatus.choices)
-    contacts = models.ManyToManyField(Contact, related_name='tasks')
+    contacts = models.ManyToManyField(Contact, default=None, related_name='tasks')
 
     def __str__(self):
         return f"{self.title}"
