@@ -31,3 +31,6 @@ class Task(models.Model):
     status = models.TextField(choices=TaskStatus.choices)
     contacts = models.ManyToManyField(Contact, related_name='tasks')
 
+    def __str__(self):
+        return f"{self.title}"
+

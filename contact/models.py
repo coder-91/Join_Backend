@@ -8,3 +8,6 @@ class Contact(models.Model):
     name = models.CharField(max_length=50)
     phone_number = models.CharField(max_length=30)
     avatar_color: models.CharField(max_length=7)
+
+    def __str__(self):
+        return f"{self.name}"
