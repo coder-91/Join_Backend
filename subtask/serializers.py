@@ -2,7 +2,11 @@ from rest_framework import serializers
 from subtask.models import Subtask
 
 
-class SubtaskSerializer(serializers.HyperlinkedModelSerializer):
+class SubtaskSerializer(serializers.ModelSerializer):
+    task_id = serializers.IntegerField()
+
     class Meta:
         model = Subtask
-        fields = ['id', 'description', 'is_done']
+        fields = ['id', 'task_id', 'description', 'is_done']
+
+
