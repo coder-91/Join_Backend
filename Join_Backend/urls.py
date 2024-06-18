@@ -14,5 +14,6 @@ router.register(r'contacts', ContactViewSet)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(router.urls)),
+    path('', include('authentication.urls')),
     path('', include('task.urls')),
 ]
