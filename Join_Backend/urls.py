@@ -7,6 +7,7 @@ from subtask.views import SubtaskViewSet
 
 router = routers.DefaultRouter()
 router.register(r'authentication', UserProfileViewSet)
+#router.register(r'tasks', TaskViewSet)
 router.register(r'subtasks', SubtaskViewSet)
 router.register(r'contacts', ContactViewSet)
 
