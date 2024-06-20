@@ -1,16 +1,21 @@
-from rest_framework import status
-from rest_framework.response import Response
-from rest_framework.views import APIView
-
+from rest_framework import viewsets
 from task.models import Task
 from task.serializers import TaskSerializer
-from utils.utils import handle_serialization
+
+
+# Developing a DRF RESTAPI for CRUD Operations using ViewSets
+class TaskViewSet(viewsets.ModelViewSet):
+    queryset = Task.objects.all().order_by('id')
+    serializer_class = TaskSerializer
+    #authentication_classes = (TokenAuthentication,)
+    permission_classes = []
+# =================================================
 
 
 # Developing a DRF RESTAPI for CRUD Operations using Class Based Views
+"""
 class TaskView(APIView):
     def get(self, request):
-        """Returns a list of tasks"""
         tasks = Task.objects.all()
         serializer = TaskSerializer(tasks, many=True)
         return Response(serializer.data)
@@ -48,38 +53,6 @@ class TaskDetailsView(APIView):
         task = self.get_task(pk)
         task.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-# =================================================
-
-
-# Developing a DRF RESTAPI for CRUD Operations using Mixins
-"""
-class TaskList(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
-    queryset = Task.objects.all()
-    serializer_class = TaskSerializer
-
-    def get(self, request):
-        return self.list(request)
-
-    def post(self, request):
-        return self.create(request)
-
-
-class TaskDetails(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin,
-                  generics.GenericAPIView):
-    queryset = Task.objects.all()
-    serializer_class = TaskSerializer
-
-    def get(self, request, pk):
-        return self.retrieve(request, pk)
-
-    def put(self, request, pk):
-        return self.update(request, pk)
-
-    def patch(self, request, pk):
-        return self.partial_update(request, pk)
-
-    def delete(self, request, pk):
-        return self.destroy(request, pk)
 """
 # =================================================
 
@@ -94,17 +67,6 @@ class TaskList(generics.ListCreateAPIView):
 class TaskDetails(generics.RetrieveUpdateDestroyAPIView):
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
-"""
-# =================================================
-
-
-# Developing a DRF RESTAPI for CRUD Operations using ViewSets
-"""
-class TaskViewSet(viewsets.ModelViewSet):
-    queryset = Task.objects.all().order_by('id')
-    serializer_class = TaskSerializer
-    #authentication_classes = (TokenAuthentication,)
-    permission_classes = []
 """
 # =================================================
 
@@ -146,5 +108,37 @@ def task_details(request,pk):
     elif request.method == 'DELETE':
         task.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+"""
+# =================================================
+
+# Developing a DRF RESTAPI for CRUD Operations using Mixins
+"""
+class TaskList(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
+    queryset = Task.objects.all()
+    serializer_class = TaskSerializer
+
+    def get(self, request):
+        return self.list(request)
+
+    def post(self, request):
+        return self.create(request)
+
+
+class TaskDetails(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin,
+                  generics.GenericAPIView):
+    queryset = Task.objects.all()
+    serializer_class = TaskSerializer
+
+    def get(self, request, pk):
+        return self.retrieve(request, pk)
+
+    def put(self, request, pk):
+        return self.update(request, pk)
+
+    def patch(self, request, pk):
+        return self.partial_update(request, pk)
+
+    def delete(self, request, pk):
+        return self.destroy(request, pk)
 """
 # =================================================
