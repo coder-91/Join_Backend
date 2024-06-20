@@ -1,8 +1,25 @@
+"""Serializers for the user API View."""
+
 from rest_framework import serializers
-from user.models import User
+from django.contrib.auth import get_user_model
 
 
-class UserSerializer(serializers.HyperlinkedModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
+    """Serializer for the user object."""
+
     class Meta:
-        model = User
-        fields = ['id', 'email', 'name']
+        model = get_user_model()
+        fields = ['email', 'password', 'name']
+        extra_kwargs = {'password': {'write_only': True, 'style': {'input_type': 'password'}, 'min_length': 5}}
+
+    def create(self, validated_data):
+        """Create and return a user with encrypted password."""
+        return get_user_model().objects.create_user(**validated_data)
+
+    def update(self, instance, validated_data):
+        """Handle updating user account"""
+        if 'password' in validated_data:
+            password = validated_data.pop('password')
+            instance.set_password(password)
+
+        return super().update(instance, validated_data)
