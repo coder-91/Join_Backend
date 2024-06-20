@@ -39,11 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework.authtoken',
-    'authentication',
     'user',
     'task',
     'subtask',
-    'contact',
     'rest_framework',
     'drf_spectacular',
 ]
@@ -127,7 +125,7 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUTH_USER_MODEL = 'authentication.CustomUser'
+AUTH_USER_MODEL = 'user.User'
 
 
 REST_FRAMEWORK = {
