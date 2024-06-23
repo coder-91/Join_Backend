@@ -30,6 +30,8 @@ class PublicUserApiTests(TestCase):
             'email': 'test@example.com',
             'password': 'testpass123',
             'name': 'Test Name',
+            'phone_number': '1234567890',
+            'avatar_color': '#123456'
         }
         res = self.client.post(CREATE_USER_URL, payload)
 
@@ -136,6 +138,8 @@ class PrivateUserApiTests(TestCase):
         self.assertEqual(res.data, {
             'name': self.user.name,
             'email': self.user.email,
+            'phone_number': self.user.phone_number,
+            'avatar_color': self.user.avatar_color
         })
 
     def test_post_me_not_allowed(self):
