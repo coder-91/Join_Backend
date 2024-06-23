@@ -22,8 +22,8 @@ def detail_url(subtask_id):
     return reverse('subtask:subtask-detail', args=[subtask_id])
 
 
-def create_task(user, **params):
-    """Create and return a sample subtask."""
+def create_task(users=None, **params):
+    """Create and return a sample task."""
     defaults = {
         'title': 'Title',
         'description': 'Description',
@@ -36,7 +36,8 @@ def create_task(user, **params):
     }
     defaults.update(params)
     task = Task.objects.create(**defaults)
-    task.users.add(user)
+    if users:
+        task.users.add(*users)
     return task
 
 
@@ -68,20 +69,27 @@ class PublicSubtaskAPITests(TestCase):
 
 
 class PrivateSubtaskApiTests(TestCase):
-    # Test authenticated API requests.
+    """Test authenticated API requests."""
 
     def setUp(self):
         self.client = APIClient()
         self.user = get_user_model().objects.create_user(
-            'user@example.com',
-            'testpass123',
+            email='user@example.com',
+            name='User',
+            password='testpass123',
         )
         self.client.force_authenticate(self.user)
 
-        self.task = create_task(self.user)
+        self.another_user = get_user_model().objects.create_user(
+            email='otheruser@otheruser.com',
+            name='OtherUser',
+            password='password',
+        )
+
+        self.task = create_task(users=[self.user, self.another_user])
 
     def test_retrieve_subtasks(self):
-        # Test retrieving a list of subtasks.
+        """Test retrieving a list of subtasks."""
         create_subtask(self.task)
         create_subtask(self.task)
 
@@ -107,7 +115,7 @@ class PrivateSubtaskApiTests(TestCase):
         payload = {
             'description': 'Sample Subtask description',
             'is_done': True,
-            'task_id': 1,
+            'task_id': self.task.id,
         }
         res = self.client.post(SUBTASKS_URL, payload)
 
@@ -135,7 +143,7 @@ class PrivateSubtaskApiTests(TestCase):
         payload = {
             'description': 'Sample Subtask description',
             'is_done': True,
-            'task_id': 1,
+            'task_id': self.task.id,
         }
         url = detail_url(subtask.id)
         res = self.client.put(url, payload)

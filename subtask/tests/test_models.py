@@ -13,8 +13,9 @@ class ModelTests(TestCase):
     def test_create_subtask(self):
         """Test creating a subtask is successful."""
         user = get_user_model().objects.create_user(
-            'test@example.com',
-            'testpass123',
+            email='user@user.com',
+            name='Name',
+            password='password'
         )
 
         task = models.Task.objects.create(
