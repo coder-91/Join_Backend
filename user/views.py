@@ -19,7 +19,7 @@ class CreateUserView(generics.CreateAPIView):
     """Create a new user in the system."""
     serializer_class = UserSerializer
     authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated, permissions.UpdateOwnProfile]
+    permission_classes = [permissions.UpdateOwnProfile]
     filter_backends = (filters.SearchFilter,)
     search_fields = ('name', 'email',)
 
