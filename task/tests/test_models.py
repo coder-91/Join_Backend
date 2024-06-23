@@ -12,8 +12,9 @@ class ModelTests(TestCase):
     def test_create_task(self):
         """Test creating a task is successful."""
         user = get_user_model().objects.create_user(
-            'test@example.com',
-            'testpass123',
+            email='test@example.com',
+            name='User',
+            password='testpass123'
         )
 
         task = models.Task.objects.create(
