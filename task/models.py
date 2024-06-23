@@ -23,7 +23,7 @@ class Task(models.Model):
     id = models.AutoField(primary_key=True)
     title = models.TextField()
     description = models.TextField()
-    dueTo = models.DateTimeField()
+    due_to = models.DateTimeField()
     created = models.DateTimeField()
     updated = models.DateTimeField()
     priority = models.TextField(choices=Priority.choices)
