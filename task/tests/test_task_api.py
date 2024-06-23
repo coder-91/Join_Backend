@@ -22,7 +22,7 @@ def detail_url(task_id):
 
 
 def create_task(users=None, **params):
-    """Create and return a task."""
+    """Create and return a sample task."""
     defaults = {
         'title': 'Sample Task',
         'description': 'Sample Description',
