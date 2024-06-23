@@ -27,7 +27,7 @@ def create_task(user, **params):
     defaults = {
         'title': 'Title',
         'description': 'Description',
-        'dueTo': timezone.now(),
+        'due_to': timezone.now(),
         'created': timezone.now(),
         'updated': timezone.now(),
         'priority': 'LOW',

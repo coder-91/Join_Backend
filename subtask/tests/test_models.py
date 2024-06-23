@@ -20,7 +20,7 @@ class ModelTests(TestCase):
         task = models.Task.objects.create(
             title='Title',
             description='Description',
-            dueTo=timezone.now(),
+            due_to=timezone.now(),
             created=timezone.now(),
             updated=timezone.now(),
             priority='LOW',
