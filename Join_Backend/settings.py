@@ -132,6 +132,7 @@ AUTH_USER_MODEL = 'user.User'
 
 REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    "SCHEMA_PATH_PREFIX": "/api/"
 }
 
 CORS_ALLOWED_ORIGINS = [
