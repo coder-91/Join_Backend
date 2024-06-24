@@ -6,8 +6,10 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.settings import api_settings
 from rest_framework import filters
 from rest_framework import generics
+from rest_framework import viewsets
 
 from user import permissions
+from user.models import User
 from user.serializers import (
     UserSerializer,
     AuthTokenSerializer,
@@ -22,6 +24,15 @@ class CreateUserView(generics.CreateAPIView):
     permission_classes = [permissions.UpdateOwnProfile]
     filter_backends = (filters.SearchFilter,)
     search_fields = ('name', 'email',)
+
+
+class UserViewSet(viewsets.ModelViewSet):
+    """List all users."""
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    http_method_names = ['get']
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
 
 
 class CreateTokenView(ObtainAuthToken):
