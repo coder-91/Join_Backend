@@ -43,7 +43,12 @@ pip install -r requirements.txt
 manage.py migrate --run-syncdb
 ```
 
-5. Entwicklungsserver starten:
+5. Django-Superuser erstellen
+```
+python manage.py createsuperuser
+```
+
+6. Entwicklungsserver starten:
 ```
 python manage.py runserver
 ```
@@ -58,7 +63,7 @@ Die API-Dokumentation kann unter http://127.0.0.1:8000/api/docs/ aufgerufen werd
 
 ### API-Endpunkte
 Die wichtigsten API-Endpunkte sind:
-- `GET /api/users/`: Liste aller Benutzer
+- `GET /api/users/`: Liste alle Benutzer
 - `POST /api/users/register`: Neuen Benutzer erstellen
 - `POST /api/users/token`: Benutzer-Token erstellen
 - `GET /api/users/me`: Eigenes Benutzerprofil anzeigen
@@ -66,7 +71,7 @@ Die wichtigsten API-Endpunkte sind:
 Weitere Endpunkte und deren Dokumentation sind unter http://127.0.0.1:8000/api/docs/ zu finden.
 
 ### Tests
-Um die Testsuite auszuführen, verwenden Sie den folgenden Befehl:
+Um die Testsuite auszuführen, verwende den folgenden Befehl:
 ```
 python manage.py test
 ```
