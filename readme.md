@@ -40,7 +40,7 @@ pip install -r requirements.txt
 
 4. Datenbankmigrationen durchführen:
 ```
-python manage.py migrate
+manage.py migrate --run-syncdb
 ```
 
 5. Entwicklungsserver starten:
