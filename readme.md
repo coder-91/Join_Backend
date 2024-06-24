@@ -1,77 +1,76 @@
 # Join Backend
-Dieses Projekt stellt den Backend-Service für die Join-Anwendung dar. Es nutzt das Django REST Framework und bietet eine API zur Verwaltung und Bereitstellung von User, Tasks und Subtasks für die Join-Frontend-Anwendung.
+This project provides the backend service for the Join application. It utilizes the Django REST Framework and offers an API for managing and delivering users, tasks, and subtasks for the Join frontend application.
 
-## Inhaltsverzeichnis
+## Table of Contents
 - [Installation](#installation)
-  - [Voraussetzungen](#voraussetzungen)
-  - [Schritte zur Installation](#schritte-zur-installation)
-- [Nutzungsanweisungen](#nutzungsanweisungen)
-  - [API-Dokumentation](#api-dokumentation)
-  - [API-Dokumentation](#api-dokumentation)
-  - [API-endpunkte](#api-endpunkte)
+  - [Prerequisites](#prerequisites)
+  - [Installation Steps](#installation-steps)
+- [Usage Instructions](#usage-instructions)
+  - [API Documentation](#api-documentation)
+  - [API Endpoints](#api-endpoints)
   - [Tests](#tests)
 
 
 
 ## Installation
-### Voraussetzungen
+### Prerequisites
 - Python 3.10.1+
 - Django 5.0.4+
-- Pip (Python Paket-Manager)
-- Virtualenv (empfohlen)
+- Pip (Python package manage)
+- Virtualenv (recommended)
 
-### Schritte zur Installation
-1. Repository klonen:
+### Installation Steps
+1. Clone the repository:
 ```
 git clone https://github.com/coder-91/Join_Backend.git
 cd Join_Backend
 ```
 
-2. Virtuelle Umgebung erstellen und aktivieren:
+2. Create and activate a virtual environment:
 ```
 python -m venv venv
 venv\Scripts\activate
 ```
 
-3. Abhängigkeiten installieren:
+3. Install dependencies:
 ```
 pip install -r requirements.txt
 ```
 
-4. Datenbankmigrationen durchführen:
+4. Perform database migrations:
 ```
 manage.py migrate --run-syncdb
 ```
 
-5. Django-Superuser erstellen
+5. Create a Django superuser
 ```
 python manage.py createsuperuser
 ```
 
-6. Entwicklungsserver starten:
+6. Start the development server:
 ```
 python manage.py runserver
 ```
 
-Die API sollte jetzt unter http://127.0.0.1:8000/ erreichbar sein.
+The API should now be accessible at http://127.0.0.1:8000/.
 
 
-## Nutzungsanweisungen
+## Usage Instructions
 
-### API-Dokumentation
-Die API-Dokumentation kann unter http://127.0.0.1:8000/api/docs/ aufgerufen werden, nachdem der Entwicklungsserver gestartet wurde.
+### API Documentation
+The API documentation can be accessed at http://127.0.0.1:8000/api/docs/ after starting the development server.
 
-### API-Endpunkte
-Die wichtigsten API-Endpunkte sind:
-- `GET /api/users/`: Liste alle Benutzer
-- `POST /api/users/register`: Neuen Benutzer erstellen
-- `POST /api/users/token`: Benutzer-Token erstellen
-- `GET /api/users/me`: Eigenes Benutzerprofil anzeigen
+### API Endpoints
+The main API endpoints are:
+- `GET /api/users/`: List all users
+- `POST /api/users/register`: Create a new user
+- `POST /api/users/token`: Create a user token
+- `GET /api/users/me`: Display own user profile
 
-Weitere Endpunkte und deren Dokumentation sind unter http://127.0.0.1:8000/api/docs/ zu finden.
+Further endpoints and their documentation can be found at http://127.0.0.1:8000/api/docs/.
 
 ### Tests
-Um die Testsuite auszuführen, verwende den folgenden Befehl:
+To run the test suite, use the following command:
 ```
 python manage.py test
 ```
