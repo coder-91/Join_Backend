@@ -52,6 +52,11 @@ python manage.py createsuperuser
 python manage.py runserver
 ```
 
+7. Login to Admin Panel:  
+Log in to the Admin Panel using your __email__ and password.
+
+
+
 The API should now be accessible at http://127.0.0.1:8000/.
 
 
