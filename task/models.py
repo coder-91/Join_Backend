@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 from user.models import User
 
@@ -25,11 +26,16 @@ class Task(models.Model):
     description = models.TextField()
     due_to = models.DateTimeField()
     created = models.DateTimeField()
-    updated = models.DateTimeField()
+    updated = models.DateTimeField(auto_now_add=True)
     priority = models.TextField(choices=Priority.choices)
     category = models.TextField(choices=Category.choices)
     status = models.TextField(choices=TaskStatus.choices)
-    users = models.ManyToManyField(User, default=None, related_name='tasks')
+    users = models.ManyToManyField(User, blank=True, related_name='tasks')
+
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.created = timezone.now()
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.title}"
