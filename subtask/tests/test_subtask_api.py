@@ -28,8 +28,6 @@ def create_task(users=None, **params):
         'title': 'Title',
         'description': 'Description',
         'due_to': timezone.now(),
-        'created': timezone.now(),
-        'updated': timezone.now(),
         'priority': 'LOW',
         'category': 'USER_STORY',
         'status': 'DONE',
