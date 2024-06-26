@@ -23,7 +23,7 @@ class Task(models.Model):
 
     id = models.AutoField(primary_key=True)
     title = models.TextField()
-    description = models.TextField()
+    description = models.TextField(blank=True)
     due_to = models.DateTimeField()
     created = models.DateTimeField()
     updated = models.DateTimeField(auto_now_add=True)
