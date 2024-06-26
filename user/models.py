@@ -1,3 +1,5 @@
+import random
+
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
@@ -41,6 +43,14 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['name']
+
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            self.avatar_color = random.choice([
+                '#FF5733', '#C70039', '#900C3F', '#581845',
+                '#8E44AD', '#1F618D', '#008000', '#A52A2A', '#000080'
+            ])
+        super().save(*args, **kwargs)
 
     def get_full_name(self):
         """Retrieve full name for user"""

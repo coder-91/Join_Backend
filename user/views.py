@@ -30,7 +30,6 @@ class UserViewSet(viewsets.ModelViewSet):
     """List all users."""
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    http_method_names = ['get']
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
