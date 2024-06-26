@@ -23,14 +23,14 @@ class Task(models.Model):
 
     id = models.AutoField(primary_key=True)
     title = models.TextField()
-    description = models.TextField(blank=True)
+    description = models.TextField(blank=True, null=True)
     due_to = models.DateTimeField()
     created = models.DateTimeField()
     updated = models.DateTimeField(auto_now_add=True)
     priority = models.TextField(choices=Priority.choices)
     category = models.TextField(choices=Category.choices)
     status = models.TextField(choices=TaskStatus.choices)
-    users = models.ManyToManyField(User, blank=True, related_name='tasks')
+    users = models.ManyToManyField(User, blank=True, null=True, related_name='tasks')
 
     def save(self, *args, **kwargs):
         if not self.id:
