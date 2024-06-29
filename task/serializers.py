@@ -17,16 +17,17 @@ class BaseTaskSerializer(serializers.ModelSerializer):
         read_only_fields = ['created', 'updated']
 
     def create(self, validated_data):
-        users_data = validated_data.pop('users.id', [])
+        users_data = validated_data.pop('users', [])
         subtasks_data = validated_data.pop('subtasks', [])
         task = Task.objects.create(**validated_data)
 
-        print('validated_data', validated_data)
-        print('users_data', users_data)
+        #print('validated_data', validated_data)
+        #print('users_data', users_data)
 
         for user_data in users_data:
+            print('user_data: ', user_data)
             #user = User.objects.get(id=user_data)
-            user = User.objects.get(id=user_data['id'])
+            user = User.objects.get(email=user_data)
             task.users.add(user)
 
         for subtask_data in subtasks_data:
