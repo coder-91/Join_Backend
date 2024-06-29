@@ -30,7 +30,7 @@ class Task(models.Model):
     priority = models.TextField(choices=Priority.choices)
     category = models.TextField(choices=Category.choices)
     status = models.TextField(choices=TaskStatus.choices)
-    users = models.ManyToManyField(User, blank=True, null=True, related_name='tasks')
+    users = models.ManyToManyField(User, related_name='tasks')
 
     def save(self, *args, **kwargs):
         if not self.id:
