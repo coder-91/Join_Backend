@@ -22,7 +22,7 @@ class BaseTaskSerializer(serializers.ModelSerializer):
         task = Task.objects.create(**validated_data)
 
         for user_data in users_data:
-            user = User.objects.get(email=user_data)
+            user = User.objects.get(id=user_data.id)
             task.users.add(user)
 
         for subtask_data in subtasks_data:
