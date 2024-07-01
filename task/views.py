@@ -24,3 +24,12 @@ class TaskViewSet(viewsets.ModelViewSet):
 
         read_serializer = ReadTaskSerializer(task)
         return Response(read_serializer.data, status=status.HTTP_201_CREATED)
+
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        write_serializer = WriteTaskSerializer(instance, data=request.data)
+        write_serializer.is_valid(raise_exception=True)
+        task = write_serializer.save()
+
+        read_serializer = ReadTaskSerializer(task)
+        return Response(read_serializer.data, status=status.HTTP_200_OK)

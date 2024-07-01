@@ -31,6 +31,28 @@ class BaseTaskSerializer(serializers.ModelSerializer):
 
         return task
 
+    def update(self, instance, validated_data):
+        users_data = validated_data.pop('users', [])
+        subtasks_data = validated_data.pop('subtasks', [])
+
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+        instance.save()
+
+        instance.users.clear()
+        for user_data in users_data:
+            user = User.objects.get(id=user_data.id)
+            instance.users.add(user)
+
+        for subtask in instance.subtasks.all():
+            subtask.delete()
+
+        for subtask_data in subtasks_data:
+            subtask_data['task_id'] = instance.id
+            SubtaskSerializer().create(validated_data=subtask_data)
+
+        return instance
+
 
 class WriteTaskSerializer(BaseTaskSerializer):
     users = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), many=True)
