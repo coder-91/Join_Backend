@@ -1,6 +1,7 @@
 """Views for the user API."""
 from django.contrib.auth import logout
 from rest_framework.authentication import TokenAuthentication
+from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -14,7 +15,7 @@ from user import permissions
 from user.models import User
 from user.serializers import (
     UserSerializer,
-    AuthTokenSerializer,
+    AuthTokenSerializer, GuestSerializer,
 )
 
 
@@ -36,6 +37,38 @@ class UserViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
 
 
+class CreateGuestView(generics.CreateAPIView):
+    """Create a new guest."""
+    serializer_class = GuestSerializer
+    token = ''
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception = True)
+        user = serializer.save()
+        token, created = Token.objects.get_or_create(user=user)
+        user_data = UserSerializer(user).data
+
+        return Response({
+            'token': token.key,
+            'user': user_data
+        }, status=status.HTTP_201_CREATED)
+
+
+class GuestLogoutView(APIView):
+    """Logout a guest and delete."""
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, *args, **kwargs):
+        if request.user.is_guest:
+            request.user.auth_token.delete()
+            request.user.delete()
+            return Response(status=status.HTTP_200_OK)
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
 class CreateTokenView(ObtainAuthToken):
     """Create a new auth token for user."""
     serializer_class = AuthTokenSerializer
@@ -44,7 +77,19 @@ class CreateTokenView(ObtainAuthToken):
 
 class UserLoginApiView(ObtainAuthToken):
     """Handle creating user authentication tokens"""
+    serializer_class = AuthTokenSerializer
     renderer_classes = api_settings.DEFAULT_RENDERER_CLASSES
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.serializer_class(data=request.data, context={'request': request})
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data['user']
+        token, created = Token.objects.get_or_create(user=user)
+        user_data = UserSerializer(user).data
+        return Response({
+            'token': token.key,
+            'user': user_data
+        }, status=status.HTTP_200_OK)
 
 
 class LogoutView(APIView):

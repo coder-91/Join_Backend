@@ -1,5 +1,5 @@
 """Serializers for the user API View."""
-
+from django.db.models import Max
 from rest_framework import serializers
 from django.contrib.auth import (
     get_user_model,
@@ -13,7 +13,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = get_user_model()
-        fields = ['id', 'email', 'password', 'name', 'phone_number', 'avatar_color']
+        fields = ['id', 'email', 'password', 'name', 'phone_number', 'is_guest', 'avatar_color']
         extra_kwargs = {
             'email': {'required': False},
             'password': {'required': False, 'write_only': True, 'style': {'input_type': 'password'}, 'min_length': 6},
@@ -36,6 +36,34 @@ class UserSerializer(serializers.ModelSerializer):
             user.save()
 
         return user
+
+
+class GuestSerializer(serializers.ModelSerializer):
+    """Serializer for guests."""
+
+    class Meta:
+        model = get_user_model()
+        fields = ['id', 'email', 'name', 'is_guest', 'avatar_color']
+        extra_kwargs = {
+            'email': {'required': False},
+            'name': {'required': False},
+            'is_guest': {'default': True},
+            'avatar_color': {'read_only': True}
+        }
+
+    def create(self, validated_data):
+        """Create and return a guest user with default values."""
+        user = get_user_model()
+        max_id = user.objects.filter(is_guest=True).aggregate(max_id=Max('id'))['max_id']
+        if max_id is None:
+            guest_id = 1
+        else:
+            guest_id = max_id + 1
+
+        validated_data['email'] = f'guest_{guest_id}@example.com'
+        validated_data['name'] = f'Guest_{guest_id}'
+        validated_data['is_guest'] = True
+        return get_user_model().objects.create_user(**validated_data)
 
 
 class AuthTokenSerializer(serializers.Serializer):
