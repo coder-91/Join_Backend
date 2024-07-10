@@ -11,7 +11,7 @@ from rest_framework import status
 from rest_framework.test import APIClient
 
 from task.models import Task
-from task.serializers import TaskSerializer
+from task.serializers import ReadTaskSerializer
 
 TASKS_URL = reverse('task:task-list')
 
@@ -77,7 +77,7 @@ class PrivateTaskApiTests(TestCase):
         res = self.client.get(TASKS_URL)
 
         tasks = Task.objects.all().order_by('id')
-        serializer = TaskSerializer(tasks, many=True)
+        serializer = ReadTaskSerializer(tasks, many=True)
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertEqual(res.data, serializer.data)
 
@@ -88,7 +88,7 @@ class PrivateTaskApiTests(TestCase):
         url = detail_url(task.id)
         res = self.client.get(url)
 
-        serializer = TaskSerializer(task)
+        serializer = ReadTaskSerializer(task)
         self.assertEqual(res.data, serializer.data)
 
     def test_create_task(self):
@@ -116,7 +116,12 @@ class PrivateTaskApiTests(TestCase):
         """Test partial update of a task."""
         task = create_task()
 
-        payload = {'title': 'New task title'}
+        payload = {'title': 'New task title',
+                   'due_to': timezone.now(),
+                   'priority': 'LOW',
+                   'category': 'USER_STORY',
+                   'status': 'DONE'}
+
         url = detail_url(task.id)
         res = self.client.patch(url, payload)
 
