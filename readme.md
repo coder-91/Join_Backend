@@ -39,7 +39,7 @@ pip install -r requirements.txt
 
 4. Perform database migrations:
 ```
-python manage.py migrate --run-syncdb
+python manage.py migrate
 ```
 
 5. Create a Django superuser
