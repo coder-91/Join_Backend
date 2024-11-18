@@ -1,6 +1,6 @@
 import os
 from pathlib import Path
-from dotenv import load_dotenv
+from dotenv.main import load_dotenv
 from google.cloud import secretmanager
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
