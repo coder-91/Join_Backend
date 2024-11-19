@@ -36,9 +36,7 @@ ENVIRONMENT = get_secret('JOIN_ENVIRONMENT')
 SECRET_KEY = get_secret('JOIN_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = get_secret('JOIN_DEBUG') == 'True'
-
-SECURE_SSL_REDIRECT = get_secret('JOIN_SECURE_SSL_REDIRECT')
+DEBUG = get_secret('JOIN_DEBUG')
 
 ALLOWED_HOSTS = [host.strip() for host in get_secret('JOIN_ALLOWED_HOSTS').split(',')]
 
