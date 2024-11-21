@@ -91,8 +91,12 @@ WSGI_APPLICATION = 'Join_Backend.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': get_secret('JOIN_DB_ENGINE'),
+        'NAME': get_secret('JOIN_DB_NAME'),
+        'USER': get_secret('JOIN_DB_USER'),
+        'PASSWORD': get_secret('JOIN_DB_PASSWORD'),
+        'HOST': get_secret('JOIN_DB_HOST'),
+        'PORT': get_secret('JOIN_DB_PORT')
     }
 }
 
