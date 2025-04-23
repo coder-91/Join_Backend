@@ -89,16 +89,25 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'Join_Backend.wsgi.application'
 
-DATABASES = {
-    'default': {
-        'ENGINE': get_secret('JOIN_DB_ENGINE'),
-        'NAME': get_secret('JOIN_DB_NAME'),
-        'USER': get_secret('JOIN_DB_USER'),
-        'PASSWORD': get_secret('JOIN_DB_PASSWORD'),
-        'HOST': get_secret('JOIN_DB_HOST'),
-        'PORT': get_secret('JOIN_DB_PORT')
+if get_secret('JOIN_DB_ENGINE') == 'django.db.backends.sqlite3':
+    DATABASES = {
+        'default': {
+            'ENGINE': get_secret('JOIN_DB_ENGINE'),
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': get_secret('JOIN_DB_ENGINE'),
+            'NAME': get_secret('JOIN_DB_NAME'),
+            'USER': get_secret('JOIN_DB_USER'),
+            'PASSWORD': get_secret('JOIN_DB_PASSWORD'),
+            'HOST': get_secret('JOIN_DB_HOST'),
+            'PORT': get_secret('JOIN_DB_PORT')
+        }
+    }
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {
