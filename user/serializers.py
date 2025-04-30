@@ -1,5 +1,6 @@
 """Serializers for the user API View."""
 from django.db.models import Max
+from django.utils import timezone
 from rest_framework import serializers
 from django.contrib.auth import (
     get_user_model,
@@ -13,17 +14,19 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = get_user_model()
-        fields = ['id', 'email', 'password', 'name', 'phone_number', 'is_guest', 'avatar_color']
+        fields = ['id', 'email', 'password', 'name', 'phone_number', 'is_guest', 'date_joined', 'avatar_color']
         extra_kwargs = {
             'email': {'required': False},
             'password': {'required': False, 'write_only': True, 'style': {'input_type': 'password'}, 'min_length': 6},
             'name': {'required': False},
             'phone_number': {'required': False},
+            'date_joined': {'read_only': True},
             'avatar_color': {'read_only': True}
         }
 
     def create(self, validated_data):
         """Create and return a user with encrypted password."""
+        validated_data['date_joined'] = timezone.now()
         return get_user_model().objects.create_user(**validated_data)
 
     def update(self, instance, validated_data):
@@ -43,11 +46,12 @@ class GuestSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = get_user_model()
-        fields = ['id', 'email', 'name', 'is_guest', 'avatar_color']
+        fields = ['id', 'email', 'name', 'is_guest', 'date_joined', 'avatar_color']
         extra_kwargs = {
             'email': {'required': False},
             'name': {'required': False},
             'is_guest': {'default': True},
+            'date_joined': {'read_only': True},
             'avatar_color': {'read_only': True}
         }
 
@@ -63,6 +67,7 @@ class GuestSerializer(serializers.ModelSerializer):
         validated_data['email'] = f'guest_{guest_id}@example.com'
         validated_data['name'] = f'Guest_{guest_id}'
         validated_data['is_guest'] = True
+        validated_data['date_joined'] = timezone.now()
         return get_user_model().objects.create_user(**validated_data)
 
 
