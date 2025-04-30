@@ -25,7 +25,6 @@ class UserSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         """Create and return a user with encrypted password."""
-        #validated_data['date_joined'] = timezone.now()
         return get_user_model().objects.create_user(**validated_data)
 
     def update(self, instance, validated_data):
@@ -66,7 +65,6 @@ class GuestSerializer(serializers.ModelSerializer):
         validated_data['email'] = f'guest_{guest_id}@example.com'
         validated_data['name'] = f'Guest_{guest_id}'
         validated_data['is_guest'] = True
-        #validated_data['date_joined'] = timezone.now()
         return get_user_model().objects.create_user(**validated_data)
 
 
