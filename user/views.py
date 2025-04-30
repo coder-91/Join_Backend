@@ -1,6 +1,5 @@
 """Views for the user API."""
 from django.contrib.auth import logout
-from django.utils import timezone
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
@@ -47,8 +46,8 @@ class CreateGuestView(generics.CreateAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception = True)
         user = serializer.save()
-        user.date_joined = timezone.now()
-        user.save()
+        #user.date_joined = timezone.now()
+        #user.save()
         token, created = Token.objects.get_or_create(user=user)
         user_data = UserSerializer(user).data
 
