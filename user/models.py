@@ -4,6 +4,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.models import BaseUserManager
+from django.utils import timezone
 
 
 # Create your models here.
@@ -39,6 +40,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_guest = models.BooleanField(default=False)
     phone_number = models.CharField(max_length=20, blank=True, null=True)
     avatar_color = models.CharField(max_length=7)
+    date_joined = models.DateTimeField(default=timezone.now)
 
     objects = UserManager()
 
