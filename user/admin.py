@@ -7,9 +7,9 @@ from user import models
 class UserAdmin(admin.ModelAdmin):
     """Define the admin pages for users."""
     ordering = ['id']
-    list_display = ['id', 'email', 'name']
+    list_display = ['id', 'email', 'name', 'date_joined']
     search_fields = ['id', 'name', 'email']
-    readonly_fields = ['last_login']
+    readonly_fields = ['last_login', 'date_joined']
 
     def save_model(self, request, obj, form, change):
         obj.password = make_password(obj.password)
