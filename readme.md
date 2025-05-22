@@ -1,81 +1,31 @@
 # Join Backend
-This project provides the backend service for the Join application. It utilizes the Django REST Framework and offers an API for managing and delivering users, tasks, and subtasks for the Join frontend application.
 
-## Table of Contents
-- [Installation](#installation)
-  - [Prerequisites](#prerequisites)
-  - [Installation Steps](#installation-steps)
-- [Usage Instructions](#usage-instructions)
-  - [API Documentation](#api-documentation)
-  - [API Endpoints](#api-endpoints)
-  - [Tests](#tests)
+**Join Backend** is a backend API built with Django and Python to support the Join Frontend task management system. It handles user authentication, task management, and data persistence, providing secure communication between the frontend and the database.
 
+## 🎮 Features
 
+- RESTful API endpoints for tasks and users
+- User login, registration, and authentication
+- Task creation, update, assignment, and deletion
+- Role-based access control and permissions
+- Integration with PostgreSQL for reliable data storage
+- Scalable and modular Django architecture
 
-## Installation
-### Prerequisites
-- Python 3.10.1+
-- Django 5.0.4+
-- Pip (Python package manage)
-- Virtualenv (recommended)
+## 🚀 Live Demo
 
-### Installation Steps
-1. Clone the repository:
-```
-git clone https://github.com/coder-91/Join_Backend.git
-cd Join_Backend
-```
+[View Live](https://join.veysel-karaali.com/)
 
-2. Create and activate a virtual environment:
-```
-python -m venv venv
-venv\Scripts\activate
-```
+## 🛠️ Tech Stack
 
-3. Install dependencies:
-```
-pip install -r requirements.txt
-```
+- Python
+- Django
+- Django REST Framework
+- PostgreSQL
 
-4. Perform database migrations:
-```
-python manage.py migrate
-```
+## 📖 About the Project
 
-5. Create a Django superuser
-```
-python manage.py createsuperuser
-```
+This backend application is designed to provide a secure and scalable API for the Join task management system. It manages user accounts, task data, and enforces business logic while communicating with the Angular frontend.
 
-6. Start the development server:
-```
-python manage.py runserver
-```
+## 📩 Contact
 
-7. Login to Admin Panel:  
-Log in to the Admin Panel using your __email__ and password.
-
-
-
-The API should now be accessible at http://127.0.0.1:8000/.
-
-
-## Usage Instructions
-
-### API Documentation
-The API documentation can be accessed at http://127.0.0.1:8000/api/docs/ after starting the development server.
-
-### API Endpoints
-The main API endpoints are:
-- `GET /api/users/`: List all users
-- `POST /api/users/register`: Create a new user
-- `POST /api/users/token`: Create a user token
-- `GET /api/users/me`: Display own user profile
-
-Further endpoints and their documentation can be found at http://127.0.0.1:8000/api/docs/.
-
-### Tests
-To run the test suite, use the following command:
-```
-python manage.py test
-```
+If you have any questions or feedback, feel free to reach out via [email](mailto:mail@veysel-karaali.com)!
